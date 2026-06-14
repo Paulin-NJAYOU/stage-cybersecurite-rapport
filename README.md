@@ -141,9 +141,9 @@ stage-cybersecurite-rapport/
 
 ## Auteur
 
-Nom : Paulin Rodrigue NJAYOU TCHAPDA....................................
+Nom : Paulin Rodrigue NJAYOU TCHAPDA
 
-Université : UQO....................................
+Université : UQO
 
 Année : 2026
 
