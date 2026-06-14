@@ -1,0 +1,85 @@
+\documentclass[12pt,a4paper,oneside]{report}
+
+% Encodage
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+
+% Mise en page
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+% Figures et tableaux
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{caption}
+
+% Liens
+\usepackage{hyperref}
+\hypersetup{
+colorlinks=true,
+linkcolor=blue,
+citecolor=blue,
+urlcolor=blue
+}
+
+% Bibliographie
+\usepackage[backend=biber,style=ieee]{biblatex}
+\addbibresource{references/bibliography.bib}
+
+% Informations du rapport
+\title{
+Rapport de stage\
+\large Sécurisation des applications SmartClinic et Plateforme OBNL\
+Threat Modeling, Contrôle d'accès, DevSecOps et Tests de pénétration
+}
+
+\author{Votre Nom}
+\date{\today}
+
+\begin{document}
+
+% Page de garde
+\maketitle
+
+% Préliminaires
+\pagenumbering{roman}
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\clearpage
+
+% Corps du rapport
+\pagenumbering{arabic}
+
+\input{chapitres/introduction}
+
+\input{chapitres/etat_art}
+
+\input{chapitres/contexte}
+
+\input{chapitres/analyse_securite}
+
+\input{chapitres/threat_modeling}
+
+\input{chapitres/controle_acces}
+
+\input{chapitres/devsecops}
+
+\input{chapitres/pentest}
+
+\input{chapitres/resultats}
+
+\input{chapitres/conclusion}
+
+% Références
+\clearpage
+\printbibliography
+
+\end{document}
