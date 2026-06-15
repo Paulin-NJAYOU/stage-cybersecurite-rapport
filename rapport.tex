@@ -1,16 +1,17 @@
 \documentclass[12pt,a4paper,oneside]{report}
 
-% Encodage
+%==================================================
+% PACKAGES
+%==================================================
+
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[french]{babel}
 
-% Mise en page
 \usepackage[a4paper,margin=2.5cm]{geometry}
 \usepackage{setspace}
 \onehalfspacing
 
-% Figures et tableaux
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{booktabs}
@@ -18,68 +19,132 @@
 \usepackage{array}
 \usepackage{caption}
 
-% Liens
-\usepackage{hyperref}
-\hypersetup{
-colorlinks=true,
-linkcolor=blue,
-citecolor=blue,
-urlcolor=blue
-}
+\usepackage[hidelinks]{hyperref}
 
-% Bibliographie
-\usepackage[backend=biber,style=ieee]{biblatex}
+% Bibliographie IEEE
+\usepackage[
+backend=biber,
+style=ieee
+]{biblatex}
+
 \addbibresource{references/bibliography.bib}
 
-% Informations du rapport
+%==================================================
+% INFORMATIONS
+%==================================================
+
 \title{
-Rapport de stage\
-\large Sécurisation des applications SmartClinic et Plateforme OBNL\
+\textbf{Rapport de Stage}[0.5cm]
+\Large
+Sécurisation des applications SmartClinic et Plateforme OBNL\
 Threat Modeling, Contrôle d'accès, DevSecOps et Tests de pénétration
 }
 
 \author{Votre Nom}
 \date{\today}
 
+%==================================================
+% DOCUMENT
+%==================================================
+
 \begin{document}
 
-% Page de garde
+%--------------------------------------------------
+% PAGE DE GARDE
+%--------------------------------------------------
+
 \maketitle
 
-% Préliminaires
+%--------------------------------------------------
+% PRÉLIMINAIRES
+%--------------------------------------------------
+
 \pagenumbering{roman}
 
 \tableofcontents
+\clearpage
+
 \listoffigures
+\clearpage
+
 \listoftables
+\clearpage
+
+% Liste des acronymes
+\chapter*{Liste des acronymes}
+\addcontentsline{toc}{chapter}{Liste des acronymes}
+
+\begin{tabular}{ll}
+RBAC & Role-Based Access Control \
+ABAC & Attribute-Based Access Control \
+IAM & Identity and Access Management \
+DFD & Data Flow Diagram \
+SAST & Static Application Security Testing \
+DAST & Dynamic Application Security Testing \
+SCA & Software Composition Analysis \
+CI/CD & Continuous Integration / Continuous Deployment \
+OWASP & Open Web Application Security Project \
+\end{tabular}
 
 \clearpage
 
-% Corps du rapport
+%--------------------------------------------------
+% CHAPITRES
+%--------------------------------------------------
+
 \pagenumbering{arabic}
 
+% Chapitre 1
 \input{chapitres/introduction}
 
+% Chapitre 2
 \input{chapitres/etat_art}
 
+% Chapitre 3
 \input{chapitres/contexte}
 
+% Chapitre 4
 \input{chapitres/analyse_securite}
 
-\input{chapitres/threat_modeling}
-
+% Chapitre 5
 \input{chapitres/controle_acces}
 
+% Chapitre 6
 \input{chapitres/devsecops}
 
+% Chapitre 7
 \input{chapitres/pentest}
 
+% Chapitre 8
 \input{chapitres/resultats}
 
+% Chapitre 9
+\input{chapitres/recommandations}
+
+% Conclusion
 \input{chapitres/conclusion}
 
-% Références
+%--------------------------------------------------
+% BIBLIOGRAPHIE
+%--------------------------------------------------
+
 \clearpage
 \printbibliography
+
+%--------------------------------------------------
+% ANNEXES
+%--------------------------------------------------
+
+\appendix
+
+\chapter{Diagrammes DFD}
+
+\chapter{Matrices RBAC}
+
+\chapter{Captures d'écran}
+
+\chapter{Rapports de vulnérabilités}
+
+\chapter{Scripts et configurations}
 
 \end{document}
