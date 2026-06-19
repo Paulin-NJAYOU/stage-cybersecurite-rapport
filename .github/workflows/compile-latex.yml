@@ -1,0 +1,55 @@
+# ============================================================
+#  .github/workflows/compile-latex.yml
+#  Compile rapport.tex → rapport.pdf à chaque push
+# ============================================================
+
+name: Compiler le rapport LaTeX
+
+on:
+  push:
+    branches: [ "**" ]          # tous les branches
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:             # déclenchement manuel depuis GitHub
+
+jobs:
+  build-pdf:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1 — Récupérer le dépôt
+      - name: Checkout du dépôt
+        uses: actions/checkout@v4
+
+      # 2 — Compiler avec latexmk (pdflatex + biber, 3 passes)
+      - name: Compiler avec LaTeX Workshop Action
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: rapport.tex
+          latexmk_use_lualatex: false
+          latexmk_shell_escape: false
+          args: >-
+            -pdf
+            -file-line-error
+            -halt-on-error
+            -interaction=nonstopmode
+
+      # 3 — Uploader le PDF comme artefact téléchargeable
+      - name: Uploader le PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: rapport-pdf
+          path: rapport.pdf
+          retention-days: 30
+
+      # 4 — (Optionnel) Pousser le PDF compilé dans le dépôt
+      #     Décommentez ces lignes si vous voulez que rapport.pdf
+      #     soit versionné directement dans le dépôt.
+      #
+      # - name: Commit & push du PDF
+      #   run: |
+      #     git config user.name  "github-actions[bot]"
+      #     git config user.email "github-actions[bot]@users.noreply.github.com"
+      #     git add rapport.pdf
+      #     git diff --cached --quiet || git commit -m "docs: mise à jour rapport.pdf [skip ci]"
+      #     git push
