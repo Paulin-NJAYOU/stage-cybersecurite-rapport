@@ -1,149 +1,67 @@
-# Rapport de stage – Cybersécurité
+# Rapport de stage — DESS STI — UQO
 
-## Description
-
-Ce dépôt contient la rédaction du rapport de stage portant sur la sécurisation de deux applications :
-
-* SmartClinic
-* Plateforme OBNL
-
-Le projet couvre :
-
-* Threat Modeling
-* Analyse de sécurité
-* Politiques de contrôle d'accès
-* Intégration DevSecOps
-* Tests de pénétration éthiques
-* Analyse des vulnérabilités et recommandations
+**Sécurisation des applications SmartClinic et Plateforme OBNL**  
+Threat Modeling · Contrôle d'accès · DevSecOps · Tests de pénétration éthiques
 
 ---
 
 ## Structure du projet
 
-```text
-stage-cybersecurite-rapport/
-
-├── rapport.tex
-
-├── chapitres/
-│   ├── introduction.tex
-│   ├── etat_art.tex
-│   ├── contexte.tex
-│   ├── analyse_securite.tex
-│   ├── threat_modeling.tex
-│   ├── controle_acces.tex
-│   ├── devsecops.tex
-│   ├── pentest.tex
-│   ├── resultats.tex
-│   └── conclusion.tex
-
-├── figures/
-
-├── tableaux/
-
+```
+rapport-stage/
+├── rapport.tex                   # Fichier principal
 ├── references/
-│   └── bibliography.bib
-
-└── annexes/
+│   └── bibliography.bib          # Bibliographie BibTeX
+├── figures/                      # Images et schémas
+├── chapitres/
+│   ├── introduction.tex          # Chapitre 1
+│   ├── etat_art.tex              # Chapitre 2
+│   ├── contexte.tex              # Chapitre 3
+│   ├── analyse_securite.tex      # Chapitre 4
+│   ├── controle_acces.tex        # Chapitre 5
+│   ├── devsecops.tex             # Chapitre 6
+│   ├── pentest.tex               # Chapitre 7
+│   ├── resultats.tex             # Chapitre 8
+│   ├── recommandations.tex       # Chapitre 9
+│   └── conclusion.tex            # Conclusion
+└── .github/
+    └── workflows/
+        └── compile-latex.yml     # CI/CD GitHub Actions
 ```
 
 ---
 
-## Chapitres
+## Compilation locale
 
-### Chapitre 1 – Introduction
+### Avec `latexmk` (recommandé)
+```bash
+latexmk -pdf -biber rapport.tex
+```
 
-* Présentation du stage
-* Objectifs
-* Méthodologie
-
-### Chapitre 2 – État de l'art
-
-* Threat Modeling
-* STRIDE
-* PASTA
-* Attack Trees
-* RBAC
-* ABAC
-* IAM
-* DevSecOps
-* OWASP
-* Tests de pénétration
-
-### Chapitre 3 – Contexte du projet
-
-* Présentation de SmartClinic
-* Présentation de la Plateforme OBNL
-* Architecture existante
-
-### Chapitre 4 – Analyse de sécurité
-
-* Actifs
-* Menaces
-* Risques
-* Surface d'attaque
-
-### Chapitre 5 – Threat Modeling
-
-* Diagrammes DFD
-* STRIDE
-* Scénarios d'attaque
-* Mesures de mitigation
-
-### Chapitre 6 – Contrôle d'accès
-
-* RBAC
-* ABAC
-* IAM
-* Matrices des permissions
-
-### Chapitre 7 – DevSecOps
-
-* SSDLC
-* CI/CD sécurisé
-* Revue de code
-* Gestion des dépendances
-* SAST
-* DAST
-* Gestion des secrets
-
-### Chapitre 8 – Tests de pénétration
-
-* Méthodologie OWASP
-* Outils utilisés
-* Vulnérabilités découvertes
-* Correctifs
-
-### Chapitre 9 – Résultats et discussion
-
-* Analyse des résultats
-* Comparaison avec l'état de l'art
-* Recommandations
-
-### Chapitre 10 – Conclusion
-
-* Bilan du projet
-* Limites
-* Perspectives
+### Manuellement (4 passes)
+```bash
+pdflatex rapport.tex
+biber    rapport
+pdflatex rapport.tex
+pdflatex rapport.tex
+```
 
 ---
 
-## Technologies utilisées
+## Compilation automatique (GitHub Actions)
 
-* LaTeX
-* GitHub
-* Overleaf
-* AWS
-* OWASP
-* DevSecOps
+À chaque `git push`, le workflow `.github/workflows/compile-latex.yml` :
+1. Compile `rapport.tex` en `rapport.pdf`
+2. Rend le PDF téléchargeable dans l'onglet **Actions → Artifacts**
+
+[![Compiler le rapport LaTeX](https://github.com/VOTRE_USERNAME/VOTRE_DEPOT/actions/workflows/compile-latex.yml/badge.svg)](https://github.com/VOTRE_USERNAME/VOTRE_DEPOT/actions/workflows/compile-latex.yml)
+
+> Remplacez `VOTRE_USERNAME/VOTRE_DEPOT` par vos vraies valeurs.
 
 ---
 
-## Auteur
+## Synchronisation avec Overleaf
 
-Nom : Paulin Rodrigue NJAYOU TCHAPDA
-
-Université : UQO
-
-Année : 2026
-
+Pour lier Overleaf à ce dépôt GitHub :  
+**Overleaf → Menu → GitHub → Connect to GitHub**  
+Vous pourrez ensuite faire `Push` / `Pull` directement depuis Overleaf.

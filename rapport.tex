@@ -1,27 +1,51 @@
-%===========================================================
-%  rapport.tex  –  Rapport de stage
-%===========================================================
+% ============================================================
+%  rapport.tex  —  Fichier principal
+%  Rapport de stage – DESS STI – Université du Québec en Outaouais
+%
+% 
+%
+%  Compilation : pdflatex + biber
+%    pdflatex rapport.tex
+%    biber    rapport
+%    pdflatex rapport.tex
+%    pdflatex rapport.tex
+%  Ou avec latexmk :
+%    latexmk -pdf -biber rapport.tex
+% ============================================================
 
-\documentclass[12pt,a4paper,oneside]{report}
+\documentclass[12pt, a4paper, oneside]{report}
 
-%-----------------------------------------------------------
-% ENCODAGE & LANGUE
-%-----------------------------------------------------------
+% ── Encodage & langue ────────────────────────────────────────
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[french]{babel}
 
-%-----------------------------------------------------------
-% MISE EN PAGE
-%-----------------------------------------------------------
-\usepackage[a4paper, top=2.5cm, bottom=2.5cm,
-            left=3cm, right=2.5cm]{geometry}
+% ── Mise en page ─────────────────────────────────────────────
+\usepackage[
+  a4paper,
+  top    = 2.5cm,
+  bottom = 2.5cm,
+  left   = 3.0cm,
+  right  = 2.5cm,
+  headheight = 15pt
+]{geometry}
 \usepackage{setspace}
 \onehalfspacing
 
-%-----------------------------------------------------------
-% GRAPHIQUES & TABLEAUX
-%-----------------------------------------------------------
+% ── En-têtes et pieds de page ────────────────────────────────
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\nouppercase{\leftmark}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+}
+
+% ── Graphiques & tableaux ────────────────────────────────────
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{booktabs}
@@ -30,288 +54,232 @@
 \usepackage{tabularx}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{multirow}
 
-%-----------------------------------------------------------
-% COULEURS & CODE SOURCE
-%-----------------------------------------------------------
+% ── Couleurs & code source ───────────────────────────────────
 \usepackage{xcolor}
 \usepackage{listings}
-
-\definecolor{codegreen}{rgb}{0,0.6,0}
-\definecolor{codegray}{rgb}{0.5,0.5,0.5}
-\definecolor{codeblue}{rgb}{0.13,0.29,0.53}
-\definecolor{backcolour}{rgb}{0.97,0.97,0.97}
-
-\lstdefinestyle{mystyle}{
-    backgroundcolor=\color{backcolour},
-    commentstyle=\color{codegreen},
-    keywordstyle=\color{codeblue}\bfseries,
-    numberstyle=\tiny\color{codegray},
-    stringstyle=\color{codegreen},
-    basicstyle=\ttfamily\footnotesize,
-    breakatwhitespace=false,
-    breaklines=true,
-    captionpos=b,
-    keepspaces=true,
-    numbers=left,
-    numbersep=5pt,
-    showspaces=false,
-    showstringspaces=false,
-    showtabs=false,
-    tabsize=2,
-    frame=single,
-    rulecolor=\color{gray!30}
-}
-\lstset{style=mystyle}
-
-%-----------------------------------------------------------
-% LIENS & PDF
-%-----------------------------------------------------------
-\usepackage[hidelinks,
-            pdfauthor={[Votre Nom]},
-            pdftitle={Rapport de stage -- Sécurisation SmartClinic \& OBNL},
-            pdfsubject={Threat Modeling, DevSecOps, Tests de pénétration},
-            pdfkeywords={DevSecOps, STRIDE, OWASP, pentest, RBAC}
-           ]{hyperref}
-
-%-----------------------------------------------------------
-% BIBLIOGRAPHIE (style IEEE)
-%-----------------------------------------------------------
-\usepackage[backend=biber, style=ieee, sorting=none]{biblatex}
-\addbibresource{references/bibliography.bib}
-
-%-----------------------------------------------------------
-% EN-TÊTES & PIEDS DE PAGE
-%-----------------------------------------------------------
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[L]{\small\leftmark}
-\fancyhead[R]{\small\rightmark}
-\fancyfoot[C]{\thepage}
-\renewcommand{\headrulewidth}{0.4pt}
-
-%-----------------------------------------------------------
-% TITRE
-%-----------------------------------------------------------
-\title{%
-  \includegraphics[width=5cm]{figures/logo_uqo.png}\\[1.5cm]
-  {\LARGE\bfseries Rapport de Stage}\\[0.5cm]
-  \rule{\linewidth}{1pt}\\[0.4cm]
-  {\large Sécurisation des applications SmartClinic et Plateforme OBNL}\\[0.2cm]
-  {\normalsize Threat Modeling, Contrôle d'accès, DevSecOps et Tests de pénétration}\\[0.4cm]
-  \rule{\linewidth}{1pt}
+\definecolor{codebg}  {RGB}{248,248,248}
+\definecolor{codekey} {RGB}{ 31, 73,135}
+\definecolor{codecom} {RGB}{ 63,127, 95}
+\definecolor{codestr} {RGB}{163, 21, 21}
+\lstset{
+  backgroundcolor = \color{codebg},
+  basicstyle      = \ttfamily\small,
+  keywordstyle    = \color{codekey}\bfseries,
+  commentstyle    = \color{codecom}\itshape,
+  stringstyle     = \color{codestr},
+  numbers         = left,
+  numberstyle     = \tiny\color{gray},
+  numbersep       = 8pt,
+  breaklines      = true,
+  frame           = single,
+  rulecolor       = \color{gray!40},
+  captionpos      = b,
+  showstringspaces= false,
+  tabsize         = 2,
 }
 
-\author{%
-  [Votre Nom]\\[0.3cm]
-  \small Rapport de stage présenté comme exigence partielle\\
-  \small du DESS en Sciences et Technologies de l'Information\\[0.5cm]
-  \small Université du Québec en Outaouais
+% ── Liens hypertexte ─────────────────────────────────────────
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdfauthor   = {[Votre Nom]},
+  pdftitle    = {Rapport de stage - Securisation SmartClinic et Plateforme OBNL},
+  pdfsubject  = {Threat Modeling - DevSecOps - Tests de penetration},
+  pdfkeywords = {STRIDE RBAC OWASP DevSecOps pentest}
 }
 
-\date{[Mois] 2026}
+% ── Bibliographie (natbib + bibtex = plus rapide sur Overleaf) ──
+\usepackage[numbers, sort&compress]{natbib}
 
-%===========================================================
+% ── Divers ───────────────────────────────────────────────────
+\usepackage{enumitem}
+\usepackage{amsmath}
+% csquotes remplacé par \og...\fg{}
+
+% ============================================================
 \begin{document}
-%===========================================================
+% ============================================================
 
-%-----------------------------------------------------------
-% PAGE DE GARDE
-%-----------------------------------------------------------
-\maketitle
-\thispagestyle{empty}
-\clearpage
+% ── PAGE DE GARDE ────────────────────────────────────────────
+\begin{titlepage}
+  \centering
+  \vspace*{0.5cm}
 
-%-----------------------------------------------------------
-% JURY D'ÉVALUATION (page romaine i)
-%-----------------------------------------------------------
+  % Logo UQO  — décommentez si vous avez le fichier
+  % \includegraphics[width=5cm]{figures/logo_uqo.png}\\[1cm]
+
+  {\Large\bfseries UNIVERSITÉ DU QUÉBEC EN OUTAOUAIS}\\[1.5cm]
+
+  {\large\bfseries
+    Sécurisation des applications SmartClinic et Plateforme OBNL :\\[0.3cm]
+    Threat Modeling, Contrôle d'accès, DevSecOps\\
+    et Tests de pénétration éthiques
+  }\\[1.5cm]
+
+  \rule{\linewidth}{0.8pt}\\[0.4cm]
+  {\normalsize
+    RAPPORT DE STAGE PRÉSENTÉ\\
+    COMME EXIGENCE PARTIELLE\\
+    DU DESS EN SCIENCES ET TECHNOLOGIES DE L'INFORMATION
+  }\\[0.4cm]
+  \rule{\linewidth}{0.8pt}\\[1.5cm]
+
+  {\large PAR}\\[0.5cm]
+  {\Large\bfseries Paulin Rodrigue NJAYOU TCHAPDA}\\[2cm]
+
+  {\large [Mois] 2026}
+\end{titlepage}
+
+% ── PAGES LIMINAIRES (numérotation romaine) ──────────────────
 \pagenumbering{roman}
 \setcounter{page}{1}
 
+% Jury
 \chapter*{Jury d'évaluation}
 \addcontentsline{toc}{chapter}{Jury d'évaluation}
-
+\vspace{1cm}
 \begin{tabular}{ll}
-  \textbf{Président du Jury :}    & Dr. [Nom du président]   \\[0.4cm]
-  \textbf{Responsable de stage :} & [Nom du responsable]     \\
+  \textbf{Président du Jury :}    & Dr.\ [Nom du président]     \\[0.6cm]
+  \textbf{Responsable de stage :} & Dr.\ Péricles De Lima Sobreira         \\
 \end{tabular}
-
 \clearpage
 
-%-----------------------------------------------------------
-% DÉDICACE
-%-----------------------------------------------------------
+% Dédicace
 \chapter*{Dédicace}
 \addcontentsline{toc}{chapter}{Dédicace}
-
 \vspace{3cm}
 \begin{center}
-\itshape
-% TODO : rédigez votre dédicace ici.
-Je dédie ce travail à \ldots
+  \itshape
+  % ↓ Rédigez votre dédicace ici
+  Je dédie ce travail à \ldots
 \end{center}
-
 \clearpage
 
-%-----------------------------------------------------------
-% REMERCIEMENTS
-%-----------------------------------------------------------
+% Remerciements
 \chapter*{Remerciements}
 \addcontentsline{toc}{chapter}{Remerciements}
+% ↓ Rédigez vos remerciements ici
+Je tiens à exprimer ma profonde gratitude à toutes les personnes qui ont
+contribué à la réalisation de ce travail.
 
-% TODO : rédigez vos remerciements ici.
-Je tiens à exprimer ma profonde gratitude à toutes les personnes qui ont contribué
-à la réalisation de ce travail.
+Mes sincères remerciements s'adressent particulièrement à mon encadreur
+Péricles De Lima Sobreira pour sa disponibilité, ses conseils avisés et son
+accompagnement tout au long de ce stage.
 
+Je remercie également l'ensemble du personnel de [Nom de l'organisation]
+pour leur collaboration et les connaissances partagées durant cette période
+de formation.
 \clearpage
 
-%-----------------------------------------------------------
-% TABLE DES MATIÈRES
-%-----------------------------------------------------------
+% Table des matières
 \tableofcontents
 \clearpage
 
-%-----------------------------------------------------------
-% LISTE DES FIGURES
-%-----------------------------------------------------------
+% Liste des figures
 \listoffigures
 \clearpage
 
-%-----------------------------------------------------------
-% LISTE DES TABLEAUX
-%-----------------------------------------------------------
+% Liste des tableaux
 \listoftables
 \clearpage
 
-%-----------------------------------------------------------
-% LISTE DES ABRÉVIATIONS, SIGLES ET ACRONYMES
-%-----------------------------------------------------------
+% Abréviations
 \chapter*{Liste des abréviations, sigles et acronymes}
 \addcontentsline{toc}{chapter}{Liste des abréviations, sigles et acronymes}
-
 \begin{tabular}{ll}
-  \textbf{ASTF}   & Automated Security Testing Framework                 \\
-  \textbf{ABAC}   & Attribute-Based Access Control                       \\
-  \textbf{CI/CD}  & Continuous Integration / Continuous Deployment       \\
-  \textbf{CVSS}   & Common Vulnerability Scoring System                  \\
-  \textbf{DAST}   & Dynamic Application Security Testing                 \\
-  \textbf{DFD}    & Data Flow Diagram                                    \\
-  \textbf{DevSecOps} & Development, Security and Operations              \\
-  \textbf{GDPR}   & General Data Protection Regulation (RGPD)            \\
-  \textbf{IAM}    & Identity and Access Management                       \\
-  \textbf{IAST}   & Interactive Application Security Testing             \\
-  \textbf{MFA}    & Multi-Factor Authentication                          \\
-  \textbf{NIST}   & National Institute of Standards and Technology       \\
-  \textbf{OBNL}   & Organisation à But Non Lucratif                      \\
-  \textbf{OWASP}  & Open Web Application Security Project                \\
-  \textbf{PTES}   & Penetration Testing Execution Standard               \\
-  \textbf{RBAC}   & Role-Based Access Control                            \\
-  \textbf{RGPD}   & Règlement Général sur la Protection des Données      \\
-  \textbf{SAST}   & Static Application Security Testing                  \\
-  \textbf{SCA}    & Software Composition Analysis                        \\
-  \textbf{SDLC}   & Software Development Lifecycle                       \\
-  \textbf{SIEM}   & Security Information and Event Management            \\
-  \textbf{SQL}    & Structured Query Language                            \\
-  \textbf{SQUARE} & Secure Quality Requirements Engineering              \\
-  \textbf{STRIDE} & Spoofing, Tampering, Repudiation, Info.\ Disclosure, \\
-                  & \quad Denial of Service, Elevation of Privilege      \\
-  \textbf{XSS}    & Cross-Site Scripting                                 \\
+  \textbf{ABAC}      & Attribute-Based Access Control                       \\
+  \textbf{ASTF}      & Automated Security Testing Framework                 \\
+  \textbf{CI/CD}     & Continuous Integration / Continuous Deployment       \\
+  \textbf{CVSS}      & Common Vulnerability Scoring System                  \\
+  \textbf{DAST}      & Dynamic Application Security Testing                 \\
+  \textbf{DevSecOps} & Development, Security and Operations                 \\
+  \textbf{DFD}       & Data Flow Diagram                                    \\
+  \textbf{GDPR}      & General Data Protection Regulation                   \\
+  \textbf{IAM}       & Identity and Access Management                       \\
+  \textbf{IAST}      & Interactive Application Security Testing             \\
+  \textbf{MFA}       & Multi-Factor Authentication                          \\
+  \textbf{NIST}      & National Institute of Standards and Technology       \\
+  \textbf{OBNL}      & Organisation à But Non Lucratif                      \\
+  \textbf{OWASP}     & Open Web Application Security Project                \\
+  \textbf{PTES}      & Penetration Testing Execution Standard               \\
+  \textbf{RBAC}      & Role-Based Access Control                            \\
+  \textbf{RGPD}      & Règlement Général sur la Protection des Données      \\
+  \textbf{SAST}      & Static Application Security Testing                  \\
+  \textbf{SCA}       & Software Composition Analysis                        \\
+  \textbf{SDLC}      & Software Development Lifecycle                       \\
+  \textbf{SIEM}      & Security Information and Event Management            \\
+  \textbf{SQL}       & Structured Query Language                            \\
+  \textbf{SQUARE}    & Secure Quality Requirements Engineering              \\
+  \textbf{STRIDE}    & Spoofing, Tampering, Repudiation, Information        \\
+                     & \quad Disclosure, Denial of Service, Elevation of Privilege \\
+  \textbf{XSS}       & Cross-Site Scripting                                 \\
 \end{tabular}
-
 \clearpage
 
-%-----------------------------------------------------------
-% RÉSUMÉ
-%-----------------------------------------------------------
+% Résumé
 \chapter*{Résumé}
 \addcontentsline{toc}{chapter}{Résumé}
-
-Ce rapport de stage, réalisé dans le cadre du DESS en Sciences et Technologies de
-l'Information à l'Université du Québec en Outaouais, porte sur la sécurisation de deux
-applications développées au sein de l'organisation~: \textbf{SmartClinic}, une plateforme de
-gestion clinique, et la \textbf{Plateforme OBNL}, destinée à la gestion d'organismes à but
+Ce rapport de stage, réalisé dans le cadre du DESS en Sciences et
+Technologies de l'Information à l'Université du Québec en Outaouais, porte
+sur la sécurisation de deux applications développées au sein de
+Dona’s Tech Estate, entreprise dont le siège social est situé à Gatineau/Ottawa, Canada~: \textbf{SmartClinic}, une plateforme de gestion clinique,
+et la \textbf{Plateforme OBNL}, destinée à la gestion d'organismes à but
 non lucratif.
 
 Les travaux s'articulent autour de trois axes complémentaires.
-Premièrement, l'élaboration d'un plan d'analyse de sécurité par modélisation des
-menaces (\textit{threat modeling}) et la définition des politiques de contrôle d'accès pour les
-deux applications.
-Deuxièmement, la mise en place de processus de codage sécurisé au sein des équipes
-de développement dans le cadre d'une intégration DevSecOps, incluant des règles de
-validation, de gestion des dépendances et de contrôle du code.
-Troisièmement, l'exécution de tests de pénétration éthiques sur les environnements de
-test de SmartClinic et de la Plateforme OBNL afin d'identifier et de documenter les
-vulnérabilités avant la mise en production.
+Premièrement, l'élaboration d'un plan d'analyse de sécurité par
+modélisation des menaces (\textit{threat modeling}) et la définition des
+politiques de contrôle d'accès pour les deux applications.
+Deuxièmement, la mise en place de processus de codage sécurisé au sein
+des équipes de développement dans le cadre d'une intégration DevSecOps,
+incluant des règles de validation, de gestion des dépendances et de
+contrôle du code.
+Troisièmement, l'exécution de tests de pénétration éthiques sur les
+environnements de test de SmartClinic et de la Plateforme OBNL afin
+d'identifier et de documenter les vulnérabilités avant la mise en
+production.
 
+% ↓ Complétez avec vos résultats chiffrés en fin de stage
 \clearpage
 
-%===========================================================
-% CHAPITRES PRINCIPAUX
-%===========================================================
+% ── CORPS DU RAPPORT (numérotation arabe) ────────────────────
 \pagenumbering{arabic}
 \setcounter{page}{1}
 
-%----- Chapitre 1 : Introduction ---------------------------
-\input{chapitres/chapitre1_introduction}
+\input{chapitres/introduction}      % Chapitre 1
+\input{chapitres/etat_art}          % Chapitre 2 — État de l'art
+\input{chapitres/contexte}          % Chapitre 3
+\input{chapitres/analyse_securite}  % Chapitre 4
+\input{chapitres/controle_acces}    % Chapitre 5
+\input{chapitres/devsecops}         % Chapitre 6
+\input{chapitres/pentest}           % Chapitre 7
+\input{chapitres/resultats}         % Chapitre 8
+\input{chapitres/recommandations}   % Chapitre 9
+\input{chapitres/conclusion}        % Conclusion générale
 
-%----- Chapitre 2 : État de l'art -------------------------
-\input{chapitres/chapitre2_etat_art}
-
-%----- Chapitre 3 : Contexte et présentation du projet ----
-\input{chapitres/chapitre3_contexte}
-
-%----- Chapitre 4 : Modélisation des menaces --------------
-\input{chapitres/chapitre4_threat_modeling}
-
-%----- Chapitre 5 : Politiques de contrôle d'accès --------
-\input{chapitres/chapitre5_controle_acces}
-
-%----- Chapitre 6 : Intégration DevSecOps -----------------
-\input{chapitres/chapitre6_devsecops}
-
-%----- Chapitre 7 : Tests de pénétration ------------------
-\input{chapitres/chapitre7_pentest}
-
-%----- Chapitre 8 : Résultats et discussion ---------------
-\input{chapitres/chapitre8_resultats}
-
-%----- Chapitre 9 : Recommandations ----------------------
-\input{chapitres/chapitre9_recommandations}
-
-%----- Conclusion générale --------------------------------
-\input{chapitres/conclusion}
-
-%-----------------------------------------------------------
-% BIBLIOGRAPHIE
-%-----------------------------------------------------------
+% ── BIBLIOGRAPHIE ────────────────────────────────────────────
 \clearpage
-\printbibliography[heading=bibintoc, title={Références bibliographiques}]
+\bibliographystyle{IEEEtran}
+\bibliography{references/bibliography}
 
-%-----------------------------------------------------------
-% ANNEXES
-%-----------------------------------------------------------
+% ── ANNEXES ──────────────────────────────────────────────────
 \appendix
 \renewcommand{\chaptername}{Annexe}
 
 \chapter{Diagrammes de flux de données (DFD)}
 \label{ann:dfd}
-% Insérez ici les diagrammes DFD générés lors de la modélisation des menaces.
 
 \chapter{Matrices RBAC}
 \label{ann:rbac}
-% Insérez ici les matrices de contrôle d'accès basé sur les rôles.
 
 \chapter{Captures d'écran des outils}
 \label{ann:captures}
-% Insérez ici les captures d'écran de OWASP ZAP, Burp Suite, etc.
 
 \chapter{Rapports de vulnérabilités}
 \label{ann:vulns}
-% Insérez ici les rapports bruts issus des tests de pénétration.
 
-\chapter{Scripts et configurations}
+\chapter{Scripts et configurations CI/CD}
 \label{ann:scripts}
-% Insérez ici les scripts utilisés (pipelines CI/CD, règles SAST, etc.)
 
 \end{document}
